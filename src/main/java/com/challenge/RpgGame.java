@@ -1,21 +1,25 @@
 package com.challenge;
 
-import com.challenge.engine.GameEngine;
-import com.challenge.engine.GameFinisher;
-import com.challenge.engine.GameLoader;
-import com.challenge.engine.GamePlayer;
-import com.challenge.exception.EndGameException;
-
 public class RpgGame {
 
-    private static final GameEngine gameEngine = new GameEngine(new GameFinisher(), new GameLoader(), new GamePlayer());
+    protected RpgGame() {
+        super();
+    }
 
     public static void main(String[] args) {
+        printWelcomeMessage();
         try {
-            gameEngine.startGame();
-        } catch (final EndGameException egx) {
+            new GameApplication()
+                    .setup()
+                    .startGameMenu();
+        } catch (final Exception egx) {
             System.err.println(egx.getMessage());
+        } finally {
+            System.exit(-1);
         }
+    }
 
+    private static void printWelcomeMessage() {
+        System.out.println("Welcome to my game!");
     }
 }

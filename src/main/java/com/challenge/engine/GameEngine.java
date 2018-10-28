@@ -1,59 +1,56 @@
 package com.challenge.engine;
 
-import com.challenge.engine.sound.MusicPlayer;
+import com.challenge.engine.actions.DuringGameActionFactory;
+import com.challenge.engine.utils.InputUtils;
 import com.challenge.exception.EndGameException;
+import com.challenge.exception.InvalidOptionException;
+import com.challenge.model.Character;
 
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Map;
-import java.util.Scanner;
+import static java.lang.String.format;
 
 public class GameEngine {
 
-    private final Map<Integer, GameAction> gameActionMap = new HashMap<>();
-    private final MusicPlayer musicPlayer = new MusicPlayer();
+    private final DuringGameActionFactory duringGameActionFactory;
 
-    public GameEngine(final GameFinisher gameFinisher, final GameLoader gameLoader, final GamePlayer gamePlayer) {
-        this.gameActionMap.put(0, gameFinisher);
-        this.gameActionMap.put(1, gamePlayer);
-        this.gameActionMap.put(2, gameLoader);
+    public GameEngine(final DuringGameActionFactory duringGameActionFactory) {
+        this.duringGameActionFactory = duringGameActionFactory;
     }
 
-    public void startGame() {
-        printWelcomeMessage();
-        startGameSound();
+    public void startGame(final Character character) {
+        System.out.println(format("Your journey is only beginning %s, The %s programmer",
+                character.getName(),
+                character.getClazz().getLanguage()));
 
-        try (Scanner scanner = new Scanner(System.in)) {
-            boolean running = true;
+        System.out.println();
 
+        try{
             do {
-                System.out.println("## Choose one of the following options ##");
-                System.out.println("Option 1 - Start Game");
-                System.out.println("Option 2 - Load Game");
-                System.out.println("Option 0 - Exit Game");
                 System.out.println("_______________________");
+                printOptions();
+                System.out.print("Choose your path: ");
 
-                System.out.print("Type your option: ");
-                int command;
                 try {
-                    command = Integer.valueOf(scanner.nextLine());
-                    running = gameActionMap.get(command).execute();
-                } catch (final Exception itm) {
-                    System.err.println("Invalid option, take another one");
-                    running = true;
+                    final Integer command = InputUtils.validateIntegerInput(duringGameActionFactory.getAvailableOptions());
+                    this.duringGameActionFactory.findDuringGameAction(command).executeAction(character);
+
+                } catch(final InvalidOptionException ioe) {
+                    System.err.println("Invalid Option!");
+                    System.err.println();
                 }
 
-            } while(running);
+            } while(true);
         } catch(final EndGameException ege) {
-            System.out.println("Thanks for Playing my Game");
+            throw ege;
         }
+
     }
 
-    public void printWelcomeMessage() {
-        System.out.println("Welcome to my game!");
+    private void printOptions() {
+        System.out.println("There are so many Slack messages coming");
+        System.out.println("What are you going to do?");
+        System.out.println("\t1) Read the next message and count on your lucky!");
+        System.out.println("\t2) Save your game process and continue another time.");
+        System.out.println("\t3) Simply abandon the game without saving any progress");
     }
 
-    public void startGameSound() {
-        this.musicPlayer.makeSomeNoise();
-    }
 }
