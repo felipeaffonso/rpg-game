@@ -30,11 +30,12 @@ public class MainMenu {
             boolean choosingOptions;
             Character character = null;
             do {
-                System.out.println("## Choose one of the following options ##");
-                System.out.println("\tOption 1 - Start Game");
-                System.out.println("\tOption 2 - Load Game");
-                System.out.println("\tOption 3 - Exit Game");
-                System.out.println("_______________________");
+                this.printMenuTitle();
+                System.out.println("_____________________________________");
+                System.out.println("1) - Start Game (start a fresh new coffee, ops, game!)");
+                System.out.println("2) - Load Game (you are gonna need your game password)");
+                System.out.println("3) - Exit Game :-(");
+                System.out.println("_____________________________________");
 
                 System.out.print("Type your option: ");
                 int command;
@@ -55,5 +56,22 @@ public class MainMenu {
             System.err.println(format("Unexpected Game Over. I am very sorry about this error: %s", ex.getMessage()));
             throw new EndGameException(ex.getMessage());
         }
+    }
+
+    private void printMenuTitle() {
+        System.out.println(
+                "   _____                        __  __                  \n" +
+                "  / ____|                      |  \\/  |                 \n" +
+                " | |  __  __ _ _ __ ___   ___  | \\  / | ___ _ __  _   _ \n" +
+                " | | |_ |/ _` | '_ ` _ \\ / _ \\ | |\\/| |/ _ \\ '_ \\| | | |\n" +
+                " | |__| | (_| | | | | | |  __/ | |  | |  __/ | | | |_| |\n" +
+                "  \\_____|\\__,_|_| |_| |_|\\___| |_|  |_|\\___|_| |_|\\__,_|\n" +
+                "                                                        \n" +
+                "                                                        ");
+
+        System.out.println(
+                "╔═╗┬  ┌─┐┌─┐┌─┐┌─┐  ┌─┐┌─┐┬  ┌─┐┌─┐┌┬┐\n" +
+                "╠═╝│  ├┤ ├─┤└─┐├┤   └─┐├┤ │  ├┤ │   │ \n" +
+                "╩  ┴─┘└─┘┴ ┴└─┘└─┘  └─┘└─┘┴─┘└─┘└─┘ ┴ ");
     }
 }

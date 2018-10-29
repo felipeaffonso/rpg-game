@@ -78,6 +78,5 @@ public class Character implements Serializable {
     public void printDetails() {
         System.out.println("Here are your character details: ");
         System.out.println(this.toString());
-        System.out.println();
     }
 }
