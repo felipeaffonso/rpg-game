@@ -44,7 +44,9 @@ public class Character implements Serializable {
     }
 
     public void receiveDamage(final Integer damage) throws DeadCharacterException {
-        assert Objects.nonNull(damage) && damage > 0;
+        if(Objects.isNull(damage) || damage < 0) {
+            throw new IllegalArgumentException();
+        }
         if(this.caffeineLevel - damage <= 0) {
             this.alive = false;
             this.caffeineLevel = 0;
@@ -54,7 +56,9 @@ public class Character implements Serializable {
     }
 
     public void drinkCoffee(final Integer quantity) {
-        assert Objects.nonNull(quantity) && quantity > 0;
+        if(Objects.isNull(quantity) || quantity < 0) {
+            throw new IllegalArgumentException();
+        }
         this.caffeineLevel += quantity;
         if(caffeineLevel >= 50) {
             throw new CoffeeNirvanaException("Congratulations! You've just reached 'Coffee Nirvana' state of mind!'");

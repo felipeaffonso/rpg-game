@@ -1,7 +1,6 @@
 package com.challenge.engine.menu;
 
 import com.challenge.engine.GameEngine;
-import com.challenge.engine.actions.DuringGameActionFactory;
 import com.challenge.engine.utils.InputUtils;
 import com.challenge.exception.CoffeeNirvanaException;
 import com.challenge.exception.DeadCharacterException;
@@ -15,11 +14,14 @@ public class MainMenu {
 
     private final MenuActionFactory menuActionFactory;
     private final GameEngine gameEngine;
+    private final InputUtils inputUtils;
 
-    public MainMenu(final MenuActionFactory menuActionFactory, final DuringGameActionFactory duringGameActionFactory,
-                    final GameEngine gameEngine) {
+    public MainMenu(final MenuActionFactory menuActionFactory,
+                    final GameEngine gameEngine,
+                    final InputUtils inputUtils) {
         this.menuActionFactory = menuActionFactory;
         this.gameEngine = gameEngine;
+        this.inputUtils = inputUtils;
     }
 
     public void startGameMenu() {
@@ -31,13 +33,13 @@ public class MainMenu {
                 System.out.println("## Choose one of the following options ##");
                 System.out.println("\tOption 1 - Start Game");
                 System.out.println("\tOption 2 - Load Game");
-                System.out.println("\tOption 0 - Exit Game");
+                System.out.println("\tOption 3 - Exit Game");
                 System.out.println("_______________________");
 
                 System.out.print("Type your option: ");
                 int command;
                 try {
-                    command = InputUtils.validateIntegerInput(this.menuActionFactory.getAvailableOptions());
+                    command = inputUtils.validateIntegerInput(this.menuActionFactory.getAvailableOptions());
                     character = this.menuActionFactory.findMenuAction(command).execute();
                     choosingOptions = false;
                 } catch (final InvalidOptionException itm) {

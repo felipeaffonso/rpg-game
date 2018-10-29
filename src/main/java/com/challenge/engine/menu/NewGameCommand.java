@@ -6,15 +6,18 @@ import com.challenge.exception.InvalidOptionException;
 import com.challenge.model.Character;
 import com.challenge.model.CharacterClassEnum;
 
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.Optional;
 
 public class NewGameCommand implements MenuAction {
 
+    private final InputUtils inputUtils;
+
+    public NewGameCommand(final InputUtils inputUtils) {
+        this.inputUtils = inputUtils;
+    }
+
     @Override
     public Character execute() {
-        InputUtils.clearConsole();
         String name = null;
         boolean validName = false;
         do {
@@ -31,7 +34,7 @@ public class NewGameCommand implements MenuAction {
         do {
             try {
                 System.out.print("Type your character's class (1) Java (2) Python (3) JavaScript: ");
-                final Integer classNumber = InputUtils.validateIntegerInput(CharacterClassEnum.getAvailableIds());
+                final Integer classNumber = inputUtils.validateIntegerInput(CharacterClassEnum.getAvailableIds());
                 characterClassEnum = selectCharacterClass(classNumber);
             } catch(final InvalidOptionException e) {
                 System.err.println("Invalid Class, please select a valid option");
@@ -50,7 +53,7 @@ public class NewGameCommand implements MenuAction {
 
     private String validateInputName() {
         try {
-            return InputUtils.validateStringInput();
+            return inputUtils.validateStringInput();
         } catch(final InvalidOptionException ioe) {
             throw new InvalidCharacterNameException("Invalid name, please type another one");
         }

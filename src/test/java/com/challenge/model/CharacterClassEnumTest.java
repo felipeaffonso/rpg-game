@@ -2,6 +2,7 @@ package com.challenge.model;
 
 import org.junit.Test;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import static com.challenge.model.CharacterClassEnum.JAVA_PROGRAMMER;
@@ -62,7 +63,7 @@ public class CharacterClassEnumTest {
     public void getLanguageDamage() {
         final Integer languageDamage = JAVA_PROGRAMMER.getLanguageDamage();
 
-        assertThat(languageDamage).isEqualTo(5);
+        assertThat(languageDamage).isEqualTo(3);
     }
 
     @Test
@@ -71,5 +72,19 @@ public class CharacterClassEnumTest {
 
         assertThat(description)
                 .isEqualToIgnoringCase("Java Programmer needs more line codes to drink a lot of coffee!");
+    }
+
+    @Test
+    public void toStringMustReturnString() {
+        final String result = JAVA_PROGRAMMER.toString();
+
+        assertThat(result).isNotNull().contains("Java Programmer needs more line codes to drink a lot of coffee!");
+    }
+
+    @Test
+    public void getAvailableIdsMustReturnValidList() {
+        final Collection<Integer> result = CharacterClassEnum.getAvailableIds();
+
+        assertThat(result).hasSize(3).contains(1, 2, 3);
     }
 }

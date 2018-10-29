@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.internal.matchers.Null;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -75,21 +76,25 @@ public class CharacterTest {
         assertThat(alive).isFalse();
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = IllegalArgumentException.class)
     public void receiveDamageMustThrowExceptionWithNullDamage() {
         final Integer damage = null;
 
         this.character.receiveDamage(damage);
     }
 
-    @Test(expected = AssertionError.class)
-    public void receiveDamageMustThrowExceptionWithZeroDamage() {
+    @Test
+    public void receiveDamageMustHaveTheSameCaffeineLevelWithZeroDamage() {
         final Integer damage = 0;
 
         this.character.receiveDamage(damage);
+
+        assertThat(this.character)
+                .extracting("alive", "caffeineLevel")
+                .contains(Boolean.TRUE, 20);
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = IllegalArgumentException.class)
     public void receiveDamageMustThrowExceptionWithNegativeDamage() {
         final Integer damage = -1;
 
@@ -114,14 +119,14 @@ public class CharacterTest {
         this.character.receiveDamage(damage);
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = IllegalArgumentException.class)
     public void drinkCoffeeMustThrowExceptionWithNullQuantity() {
         final Integer quantity = null;
 
         this.character.drinkCoffee(quantity);
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = IllegalArgumentException.class)
     public void drinkCoffeeMustThrowExceptionWithInvalidQuantity() {
         final Integer quantity = -1;
 
@@ -142,5 +147,17 @@ public class CharacterTest {
         final Integer quantity = 55;
 
         this.character.drinkCoffee(quantity);
+    }
+
+    @Test
+    public void toStringMustReturns() {
+        final String result = this.character.toString();
+
+        assertThat(result).isNotNull().contains("name");
+    }
+
+    @Test
+    public void printDetails() {
+        this.character.printDetails();
     }
 }

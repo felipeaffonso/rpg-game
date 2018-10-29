@@ -3,7 +3,6 @@ package com.challenge.model;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -11,7 +10,7 @@ public enum CharacterClassEnum implements Serializable {
 
     JAVA_PROGRAMMER(1, "Java Programmer", "Java", 3, "Java Programmer needs more line codes to drink a lot of coffee!"),
     PYTHON_PROGRAMMER(2, "Python Geek", "Python", 4, "Python Programmer is a geek that can code really fast!"),
-    JAVASCRIPT_PROGRAMMER(3, "JS.vendor.min.bundle", "Javascript", 5, "While you reading this, 7 new JS frameworks were lauched");
+    JAVASCRIPT_PROGRAMMER(3, "JS.programmer.min.bundle", "Javascript", 5, "While you read this, 7 new JS frameworks were launched");
 
     private Integer id;
 

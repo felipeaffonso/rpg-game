@@ -1,5 +1,6 @@
 package com.challenge.engine;
 
+import com.challenge.engine.actions.DuringGameAction;
 import com.challenge.engine.actions.DuringGameActionFactory;
 import com.challenge.engine.utils.InputUtils;
 import com.challenge.exception.EndGameException;
@@ -11,9 +12,11 @@ import static java.lang.String.format;
 public class GameEngine {
 
     private final DuringGameActionFactory duringGameActionFactory;
+    private final InputUtils inputUtils;
 
-    public GameEngine(final DuringGameActionFactory duringGameActionFactory) {
+    public GameEngine(final DuringGameActionFactory duringGameActionFactory, final InputUtils inputUtils) {
         this.duringGameActionFactory = duringGameActionFactory;
+        this.inputUtils = inputUtils;
     }
 
     public void startGame(final Character character) {
@@ -30,8 +33,9 @@ public class GameEngine {
                 System.out.print("Choose your path: ");
 
                 try {
-                    final Integer command = InputUtils.validateIntegerInput(duringGameActionFactory.getAvailableOptions());
-                    this.duringGameActionFactory.findDuringGameAction(command).executeAction(character);
+                    final Integer command = inputUtils.validateIntegerInput(duringGameActionFactory.getAvailableOptions());
+                    final DuringGameAction duringGameAction = this.duringGameActionFactory.findDuringGameAction(command);
+                    duringGameAction.executeAction(character);
 
                 } catch(final InvalidOptionException ioe) {
                     System.err.println("Invalid Option!");

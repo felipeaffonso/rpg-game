@@ -8,33 +8,34 @@ import java.util.Scanner;
 
 public class InputUtils {
 
-    private final static Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
 
-    public static Integer validateIntegerInput(final Collection<Integer> availableOptions) {
+    public InputUtils(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    public Integer validateIntegerInput(final Collection<Integer> availableOptions) {
         try {
-            final Integer command = Integer.valueOf(scanner.nextLine());
+            final Integer command = Integer.valueOf(scanner.next());
             if (Objects.isNull(availableOptions) || !availableOptions.contains(command)) {
                 throw new InvalidOptionException();
             }
             return command;
-        } catch (final NumberFormatException e) {
+        } catch (final Exception e) {
             throw new InvalidOptionException();
         }
     }
 
-    public static String validateStringInput() {
+    public String validateStringInput() {
         try {
-            final String input = scanner.nextLine();
+            final String input = scanner.next();
             if (Objects.isNull(input) || input.trim().length() == 0) {
                 throw new InvalidOptionException();
             }
             return input;
-        } catch (final NumberFormatException e) {
+        } catch (final Exception e) {
             throw new InvalidOptionException();
         }
     }
 
-    public static void clearConsole() {
-        System.out.println("\n\n\n\n");
-    }
 }

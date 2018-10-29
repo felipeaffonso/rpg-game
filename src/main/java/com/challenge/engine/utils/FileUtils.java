@@ -16,7 +16,7 @@ public class FileUtils {
     private static final String FILES = "files/";
     private static final String FILE_EXTENSION = ".bkp";
 
-    public static String saveCharacterToFile(final Character character) {
+    public String saveCharacterToFile(final Character character) {
         final String uuid = UUID.randomUUID().toString();
         final Path path = Paths.get(FILES + uuid + FILE_EXTENSION);
         try (
@@ -30,7 +30,7 @@ public class FileUtils {
         }
     }
 
-    public static Character readCharacterFromFile(final String uuid) {
+    public Character readCharacterFromFile(final String uuid) {
         final Path path = Paths.get(FILES + uuid + FILE_EXTENSION);
         try (
                 final FileInputStream fis = new FileInputStream(path.toFile());
@@ -43,7 +43,7 @@ public class FileUtils {
         }
     }
 
-    public static void waitSeconds(int seconds) {
+    public void waitSeconds(int seconds) {
         try {
             Thread.sleep(seconds * 1000);
         } catch (final InterruptedException e) {

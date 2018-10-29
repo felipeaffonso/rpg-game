@@ -8,9 +8,16 @@ import com.challenge.model.Character;
 
 public class LoadGameCommand implements MenuAction {
 
+    private final InputUtils inputUtils;
+    private final FileUtils fileUtils;
+
+    LoadGameCommand(InputUtils inputUtils, FileUtils fileUtils) {
+        this.inputUtils = inputUtils;
+        this.fileUtils = fileUtils;
+    }
+
     @Override
     public Character execute() {
-        InputUtils.clearConsole();
         String password = null;
         boolean validPassword = false;
         do {
@@ -24,7 +31,7 @@ public class LoadGameCommand implements MenuAction {
         } while (!validPassword);
 
 
-        final Character character = FileUtils.readCharacterFromFile(password);
+        final Character character = this.fileUtils.readCharacterFromFile(password);
         character.printDetails();
 
         return character;
@@ -32,9 +39,10 @@ public class LoadGameCommand implements MenuAction {
 
     private String validateInputPassword() {
         try {
-            return InputUtils.validateStringInput();
+            return inputUtils.validateStringInput();
         } catch(final InvalidOptionException ioe) {
             throw new InvalidCharacterNameException("Invalid Game Password, please type another one");
         }
     }
+
 }
