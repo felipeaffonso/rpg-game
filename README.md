@@ -95,11 +95,11 @@ As we are using `Spring`, `Lombok` and other libraries, somethings we forget how
 
 Cohesion and Coupling comes to our mind all the time. At this time you miss so much: `@Autowired`, `@Bean`, `@DefaultArgsConstructor` and so many code tricks that we use every day.
 
-For the models, I don't like them **Anemic**, so I put the "Business" methods there, like `takeDamage` or `drinkCoffee', following Object Oriented programming principles. 
+For the models, I don't like them **Anemic**, so I put the "Business" methods there, like `takeDamage` or `drinkCoffee`, following Object Oriented programming principles. 
 
 Testing is very important for me, so I used `Jacoco` to help me, telling the methods, lines and branches that I could possibly have forgot to test.
 
-I have used some Factory Pattern for the `Actions` in my game, and then I could have integers as keys in Maps that contains all the available commands to execute.
+I have used some `Factory` and `Command` Patterns for the `Actions` in my game, and then I could have integers as keys in Maps that contains all the available commands to execute.
 
 To be honest, I made myself very happy doing this challenge, this kind of thing makes us better every day.
 
