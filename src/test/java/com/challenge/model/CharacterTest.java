@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.mockito.internal.matchers.Null;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -153,7 +152,7 @@ public class CharacterTest {
     public void toStringMustReturns() {
         final String result = this.character.toString();
 
-        assertThat(result).isNotNull().contains("name");
+        assertThat(result).isNotNull().contains("Dummy");
     }
 
     @Test

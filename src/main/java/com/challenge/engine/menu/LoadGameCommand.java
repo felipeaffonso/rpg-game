@@ -22,7 +22,7 @@ public class LoadGameCommand implements MenuAction {
         boolean validPassword = false;
         do {
             try{
-                System.out.print("Type your Game Password: " );
+                System.out.print(this.fileUtils.getString("game.requestPassword"));
                 password = validateInputPassword();
                 validPassword = true;
             } catch(final InvalidCharacterNameException e) {
@@ -41,7 +41,7 @@ public class LoadGameCommand implements MenuAction {
         try {
             return inputUtils.validateStringInput();
         } catch(final InvalidOptionException ioe) {
-            throw new InvalidCharacterNameException("Invalid Game Password, please type another one");
+            throw new InvalidCharacterNameException(this.fileUtils.getString("game.invalidPassword"));
         }
     }
 

@@ -16,6 +16,7 @@ import java.util.Random;
 import static com.challenge.model.CharacterClassEnum.JAVASCRIPT_PROGRAMMER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -39,6 +40,7 @@ public class FindMonsterBugActionTest {
 
     @Test
     public void executeActionCorrectedFiveAndLeftFiveBugs() {
+        when(this.fileUtils.getString(anyString())).thenReturn("");
         when(this.random.nextInt(anyInt()))
                 .thenReturn(9)
                 .thenReturn(5);
@@ -50,6 +52,7 @@ public class FindMonsterBugActionTest {
 
     @Test(expected = CoffeeNirvanaException.class)
     public void executeActionMustThrowCoffeeNirvanaExceptionWhenCaffeineLevelIsHigherThanLimit() {
+        when(this.fileUtils.getString(anyString())).thenReturn("");
         when(this.random.nextInt(anyInt()))
                 .thenReturn(9)
                 .thenReturn(10);
@@ -59,6 +62,7 @@ public class FindMonsterBugActionTest {
 
     @Test(expected = DeadCharacterException.class)
     public void executeActionMustThrowDeadCharacterExceptionWhenCaffeineLevelIsLowerThanLimit() {
+        when(this.fileUtils.getString(anyString())).thenReturn("");
         when(this.random.nextInt(anyInt()))
                 .thenReturn(25)
                 .thenReturn(1);

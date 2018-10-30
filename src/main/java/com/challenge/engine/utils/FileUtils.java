@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 public class FileUtils {
@@ -49,6 +50,14 @@ public class FileUtils {
         } catch (final InterruptedException e) {
             //Just jump a line when Thread.sleep fails
             System.out.println();
+        }
+    }
+
+    public String getString(final String key) {
+        try {
+            return ResourceBundle.getBundle("messages").getString(key);
+        } catch (final Exception e) {
+            return "wrong resource key";
         }
     }
 

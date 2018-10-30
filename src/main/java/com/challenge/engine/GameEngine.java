@@ -2,35 +2,38 @@ package com.challenge.engine;
 
 import com.challenge.engine.actions.DuringGameAction;
 import com.challenge.engine.actions.DuringGameActionFactory;
+import com.challenge.engine.utils.FileUtils;
 import com.challenge.engine.utils.InputUtils;
 import com.challenge.exception.EndGameException;
 import com.challenge.exception.InvalidOptionException;
 import com.challenge.model.Character;
 
-import static java.lang.String.format;
+import static java.text.MessageFormat.format;
 
 public class GameEngine {
 
     private final DuringGameActionFactory duringGameActionFactory;
     private final InputUtils inputUtils;
+    private final FileUtils fileUtils;
 
-    public GameEngine(final DuringGameActionFactory duringGameActionFactory, final InputUtils inputUtils) {
+    public GameEngine(final DuringGameActionFactory duringGameActionFactory, final InputUtils inputUtils,
+                      final FileUtils fileUtils) {
         this.duringGameActionFactory = duringGameActionFactory;
         this.inputUtils = inputUtils;
+        this.fileUtils = fileUtils;
     }
 
     public void startGame(final Character character) {
-        System.out.println(format("Your journey is only beginning %s, The %s programmer",
+        fileUtils.waitSeconds(2);
+        System.out.println(format(fileUtils.getString("game.journeyBeginning"),
                 character.getName(),
                 character.getClazz().getLanguage()));
 
-        System.out.println();
-
         try{
+
             do {
-                System.out.println("_______________________");
-                printOptions();
-                System.out.print("Choose your path: ");
+                System.out.println(this.fileUtils.getString("game.duringGameMenu"));
+                System.out.print(this.fileUtils.getString("game.typeOption"));
 
                 try {
                     final Integer command = inputUtils.validateIntegerInput(duringGameActionFactory.getAvailableOptions());
@@ -38,7 +41,7 @@ public class GameEngine {
                     duringGameAction.executeAction(character);
 
                 } catch(final InvalidOptionException ioe) {
-                    System.err.println("Invalid Option!");
+                    System.err.println(fileUtils.getString("game.error.invalidOption"));
                     System.err.println();
                 }
 
@@ -47,14 +50,6 @@ public class GameEngine {
             throw ege;
         }
 
-    }
-
-    private void printOptions() {
-        System.out.println("There are so many Slack messages coming");
-        System.out.println("What are you going to do?");
-        System.out.println("\t1) Read the next message and count on your lucky!");
-        System.out.println("\t2) Save your game process and continue another time.");
-        System.out.println("\t3) Simply abandon the game without saving any progress");
     }
 
 }

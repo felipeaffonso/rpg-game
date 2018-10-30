@@ -67,16 +67,16 @@ public class Character implements Serializable {
 
     @Override
     public String toString() {
-        return "Character{" +
-                "name='" + name + '\'' +
-                ", clazz=" + clazz +
-                ", caffeineLevel=" + caffeineLevel +
-                ", alive=" + alive +
-                '}';
+        return "Name: " + name + "\n" +
+                "Class: " + this.clazz.getName() + " - Language Damage: " + this.clazz.getLanguageDamage() + "\n" +
+                "Caffeine Level: " + caffeineLevel;
     }
 
     public void printDetails() {
-        System.out.println("Here are your character details: ");
+        System.out.println("\n_________________________________________________________________________________________");
+        System.out.println("Current Status: ");
         System.out.println(this.toString());
+        System.out.println("_________________________________________________________________________________________");
     }
+
 }

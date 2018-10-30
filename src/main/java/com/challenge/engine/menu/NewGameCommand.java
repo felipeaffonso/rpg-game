@@ -1,19 +1,29 @@
 package com.challenge.engine.menu;
 
+import com.challenge.engine.utils.FileUtils;
 import com.challenge.engine.utils.InputUtils;
 import com.challenge.exception.InvalidCharacterNameException;
 import com.challenge.exception.InvalidOptionException;
 import com.challenge.model.Character;
 import com.challenge.model.CharacterClassEnum;
 
+import java.text.MessageFormat;
 import java.util.Objects;
+
+import static com.challenge.model.CharacterClassEnum.JAVASCRIPT_PROGRAMMER;
+import static com.challenge.model.CharacterClassEnum.JAVA_PROGRAMMER;
+import static com.challenge.model.CharacterClassEnum.PYTHON_PROGRAMMER;
+import static java.text.MessageFormat.format;
 
 public class NewGameCommand implements MenuAction {
 
     private final InputUtils inputUtils;
 
-    public NewGameCommand(final InputUtils inputUtils) {
+    private final FileUtils fileUtils;
+
+    NewGameCommand(final InputUtils inputUtils, final FileUtils fileUtils) {
         this.inputUtils = inputUtils;
+        this.fileUtils = fileUtils;
     }
 
     @Override
@@ -22,7 +32,7 @@ public class NewGameCommand implements MenuAction {
         boolean validName = false;
         do {
             try{
-                System.out.print("Type your character's name: " );
+                System.out.print(fileUtils.getString("game.requestName"));
                 name = validateInputName();
                 validName = true;
             } catch(final InvalidCharacterNameException e) {
@@ -33,17 +43,27 @@ public class NewGameCommand implements MenuAction {
         CharacterClassEnum characterClassEnum = null;
         do {
             try {
-                System.out.print("Type your character's class (1) Java (2) Python (3) JavaScript: ");
+                System.out.println(this.fileUtils.getString("game.classesIntro"));
+                System.out.println(getClassesMessage());
+                System.out.print(fileUtils.getString("game.requestClass"));
                 final Integer classNumber = inputUtils.validateIntegerInput(CharacterClassEnum.getAvailableIds());
                 characterClassEnum = selectCharacterClass(classNumber);
             } catch(final InvalidOptionException e) {
-                System.err.println("Invalid Class, please select a valid option");
+                System.err.println(this.fileUtils.getString("game.error.invalidClass"));
             }
         } while(Objects.isNull(characterClassEnum));
 
         final Character character = new Character(name, characterClassEnum);
         character.printDetails();
+        this.fileUtils.waitSeconds(2);
         return character;
+    }
+
+    private String getClassesMessage() {
+        return format(this.fileUtils.getString("game.classes"),
+                JAVA_PROGRAMMER.toString(),
+                PYTHON_PROGRAMMER.toString(),
+                JAVASCRIPT_PROGRAMMER.toString());
     }
 
     private CharacterClassEnum selectCharacterClass(final Integer classNumber) {
@@ -55,7 +75,7 @@ public class NewGameCommand implements MenuAction {
         try {
             return inputUtils.validateStringInput();
         } catch(final InvalidOptionException ioe) {
-            throw new InvalidCharacterNameException("Invalid name, please type another one");
+            throw new InvalidCharacterNameException(this.fileUtils.getString("game.error.invalidName"));
         }
     }
 

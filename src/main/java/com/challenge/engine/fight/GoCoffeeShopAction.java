@@ -3,6 +3,7 @@ package com.challenge.engine.fight;
 import com.challenge.engine.utils.FileUtils;
 import com.challenge.model.Character;
 
+import java.text.MessageFormat;
 import java.util.Random;
 
 
@@ -20,14 +21,30 @@ public class GoCoffeeShopAction implements FightAction {
     @Override
     public void executeAction(final Character character) {
         final Integer coffees = this.random.nextInt(5) + 1;
-        System.out.println("You are now at the coffee shop");
+        System.out.println(this.fileUtils.getString("action.shop.welcome"));
         this.fileUtils.waitSeconds(2);
-        System.out.println("Enjoy your coffee...");
+        this.printMug();
         this.fileUtils.waitSeconds(2);
-        System.out.println("Go get a REAL COFFEE!");
+        System.out.println(this.fileUtils.getString("action.shop.enjoy"));
         this.fileUtils.waitSeconds(2);
-        System.out.println("Yeah!!! Nice! " + coffees + " more coffee cells are now giving you so much pleasure!");
+        System.out.println(this.fileUtils.getString("action.shop.real"));
+        this.fileUtils.waitSeconds(2);
+        System.out.println(MessageFormat.format(this.fileUtils.getString("action.shop.coffees"), coffees));
         this.fileUtils.waitSeconds(2);
         character.drinkCoffee(coffees);
     }
+
+    private void printMug() {
+        System.out.println(
+                "      )  (\n" +
+                "     (   ) )\n" +
+                "      ) ( (\n" +
+                "    (______)_\n" +
+                " .-'---------|  \n" +
+                "( C|/\\/\\/\\/\\/|\n" +
+                " '-./\\/\\/\\/\\/|\n" +
+                "   '_________'\n" +
+                "    '-------'");
+    }
+
 }

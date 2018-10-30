@@ -1,5 +1,6 @@
 package com.challenge.engine.menu;
 
+import com.challenge.engine.utils.FileUtils;
 import com.challenge.engine.utils.InputUtils;
 import com.challenge.exception.InvalidOptionException;
 import com.challenge.model.Character;
@@ -17,6 +18,7 @@ import java.util.Collection;
 import static com.challenge.model.CharacterClassEnum.JAVA_PROGRAMMER;
 import static com.challenge.model.CharacterClassEnum.getAvailableIds;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -29,18 +31,23 @@ public class NewGameCommandTest {
     @Mock
     private InputUtils inputUtils;
 
+    @Mock
+    private FileUtils fileUtils;
+
     @InjectMocks
     private NewGameCommand target;
 
     private Character character;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         this.character = new Character(DUMMY_NAME, JAVA_PROGRAMMER);
     }
 
     @Test
     public void executeMustCreateCharacterWithInputErrorHandling() {
+        when(this.fileUtils.getString(anyString())).thenReturn("");
+
         final Exception invalidOptionException = new InvalidOptionException();
 
         when(this.inputUtils.validateStringInput())

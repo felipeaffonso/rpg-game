@@ -3,6 +3,7 @@ package com.challenge.engine;
 import com.challenge.engine.actions.AbandonGameAction;
 import com.challenge.engine.actions.DuringGameActionFactory;
 import com.challenge.engine.actions.ReadNextMessageAction;
+import com.challenge.engine.utils.FileUtils;
 import com.challenge.engine.utils.InputUtils;
 import com.challenge.exception.EndGameException;
 import com.challenge.exception.InvalidOptionException;
@@ -14,7 +15,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 import static com.challenge.model.CharacterClassEnum.JAVASCRIPT_PROGRAMMER;
 import static java.util.Arrays.asList;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GameEngineTest {
@@ -34,6 +34,9 @@ public class GameEngineTest {
 
     @Mock
     private InputUtils inputUtils;
+
+    @Mock
+    private FileUtils fileUtils;
 
     @Mock
     private ReadNextMessageAction readNextMessageAction;
@@ -57,26 +60,28 @@ public class GameEngineTest {
     @Test
     public void startGameHandlingPossibleErrors() {
         final List<Integer> availableOptions = asList(1, 2, 3);
-        when(this.duringGameActionFactory.getAvailableOptions())
-                .thenReturn(availableOptions);
+
+        doReturn(availableOptions).when(this.duringGameActionFactory).getAvailableOptions();
 
         final Exception invalidOptionException = new InvalidOptionException();
-        final Integer readNextMessageCommand = 1;
-        final Integer abandonGameMessageCommand = 3;
+        final int readNextMessageCommand = 1;
+        final int abandonGameMessageCommand = 3;
 
-        when(this.inputUtils.validateIntegerInput(availableOptions))
-                .thenThrow(invalidOptionException)
-                .thenReturn(readNextMessageCommand)
-                .thenReturn(abandonGameMessageCommand);
+        doThrow(invalidOptionException)
+                .doReturn(readNextMessageCommand)
+                .doReturn(abandonGameMessageCommand)
+                .when(this.inputUtils).validateIntegerInput(availableOptions);
 
-        when(this.duringGameActionFactory.findDuringGameAction(anyInt()))
-                .thenReturn(readNextMessageAction)
-                .thenReturn(abandonGameAction);
+        doReturn(readNextMessageAction)
+                .doReturn(abandonGameAction)
+                .when(this.duringGameActionFactory).findDuringGameAction(anyInt());
 
         final Exception endGameException = new EndGameException(THIS_IS_THE_END);
 
-        Mockito.doNothing().when(this.readNextMessageAction).executeAction(this.character);
-        Mockito.doThrow(endGameException).when(this.abandonGameAction).executeAction(this.character);
+        doNothing().when(this.readNextMessageAction).executeAction(this.character);
+        doThrow(endGameException).when(this.abandonGameAction).executeAction(this.character);
+
+        doReturn("Message").when(this.fileUtils).getString(anyString());
 
         thrown.expect(EndGameException.class);
         thrown.expectMessage(THIS_IS_THE_END);

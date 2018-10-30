@@ -13,7 +13,7 @@ public class DuringGameActionFactory {
                                    final FightActionFactory fightActionFactory) {
         duringGameActionMap.put(1, new ReadNextMessageAction(random, fightActionFactory));
         duringGameActionMap.put(2, new SaveGameAndExitAction(fileUtils));
-        duringGameActionMap.put(3, new AbandonGameAction());
+        duringGameActionMap.put(3, new AbandonGameAction(fileUtils));
     }
 
     public DuringGameAction findDuringGameAction(final Integer commandId) {

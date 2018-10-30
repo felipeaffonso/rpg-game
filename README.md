@@ -83,6 +83,7 @@ Follow the instructions on screen and **enjoy your coffee**
 1. `Exceptions` were not tested.
 2. `Main` class was nos tested
 3. `InputUtils` and `FileUtils` were removed from Jacoco Coverage because of an [incompatibility](https://github.com/powermock/powermock/wiki/Code-coverage-with-JaCoCo) between Jacoco and PowerMock
+3. `InputUtils` and `FileUtils` coverage tests are not working at IntelliJ with the Coverage option, but Run and Debug is OK
 
 ## Developer Considerations
 
@@ -92,6 +93,18 @@ The requirement that tells that we **CAN'T** use `any` library (only using for t
 
 As we are using `Spring`, `Lombok` and other libraries, somethings we forget how the things works behind the scene.
 
-Cohesion and Coupling comes to our mind all the time. At this time you miss so much: `@Autowired`, `@Bean`, `@DefaultArgsConstructor` and so many code tricks that we use every day. 
+Cohesion and Coupling comes to our mind all the time. At this time you miss so much: `@Autowired`, `@Bean`, `@DefaultArgsConstructor` and so many code tricks that we use every day.
 
-Testing is very important for me, so I used `Jacoco` to help me, telling the methods, lines and branches that I could possibly have forgotten.
+For the models, I don't like them **Anemic**, so I put the "Business" methods there, like `takeDamage` or `drinkCoffee', following Object Oriented programming principles. 
+
+Testing is very important for me, so I used `Jacoco` to help me, telling the methods, lines and branches that I could possibly have forgot to test.
+
+I have used some Factory Pattern for the `Actions` in my game, and then I could have integers as keys in Maps that contains all the available commands to execute.
+
+To be honest, I made myself very happy doing this challenge, this kind of thing makes us better every day.
+
+The Game is extensible, you can add new actions at each part. Also you can add new Fight Actions.
+
+Thinking in other markets, the string messages are externalized, so you can translate to any language. (The majority strings).
+
+Practicing, Practicing and Practicing...

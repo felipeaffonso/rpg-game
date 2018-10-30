@@ -13,9 +13,9 @@ public class MenuActionFactory {
     private final Map<Integer, MenuAction> gameActionMap = new HashMap<>();
 
     public MenuActionFactory(final FileUtils fileUtils, final InputUtils inputUtils) {
-        gameActionMap.put(1, new NewGameCommand(inputUtils));
+        gameActionMap.put(1, new NewGameCommand(inputUtils, fileUtils));
         gameActionMap.put(2, new LoadGameCommand(inputUtils, fileUtils));
-        gameActionMap.put(3, new FinishGameCommand());
+        gameActionMap.put(3, new FinishGameCommand(fileUtils));
     }
 
     public MenuAction findMenuAction(final Integer commandId) {

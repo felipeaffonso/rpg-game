@@ -14,6 +14,7 @@ import java.util.Random;
 
 import static com.challenge.model.CharacterClassEnum.PYTHON_PROGRAMMER;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -37,6 +38,7 @@ public class FindDisturbingPersonAtPrinterTest {
 
     @Test
     public void executeAction() {
+        when(this.fileUtils.getString(anyString())).thenReturn("");
         when(this.random.nextInt(5)).thenReturn(3);
 
         target.executeAction(this.character);
@@ -46,6 +48,7 @@ public class FindDisturbingPersonAtPrinterTest {
 
     @Test(expected = DeadCharacterException.class)
     public void executeActionMustThrowDeadCharacterExceptionWhenCaffeineLevelIsLowerThanLimit() {
+        when(this.fileUtils.getString(anyString())).thenReturn("");
         when(this.random.nextInt(5)).thenReturn(19);
 
         target.executeAction(this.character);

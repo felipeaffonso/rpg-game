@@ -5,6 +5,8 @@ import com.challenge.model.Character;
 
 import java.util.Random;
 
+import static java.text.MessageFormat.format;
+
 public class AnswerBossMomAction implements FightAction {
 
     private final FileUtils fileUtils;
@@ -19,24 +21,46 @@ public class AnswerBossMomAction implements FightAction {
     @Override
     public void executeAction(Character character) {
         final int problems = this.random.nextInt(10) + 1;
-        System.out.println("Your boss mom is very cute!");
+        printMom();
+        System.out.println(this.fileUtils.getString("action.mom.cute"));
         this.fileUtils.waitSeconds(2);
-        System.out.println("She brought coffees and problems");
+        System.out.println(this.fileUtils.getString("action.mom.brought"));
         this.fileUtils.waitSeconds(1);
-        System.out.println(".....");
+        System.out.println(this.fileUtils.getString("action.mom.points"));
         this.fileUtils.waitSeconds(2);
-        System.out.println("You have to solve " + problems + " nice bugs");
+        System.out.println(format(this.fileUtils.getString("action.mom.solve"), problems));
         this.fileUtils.waitSeconds(3);
-        System.out.println("DOUBLE COFFEE for each corrected bug!");
+        System.out.println(this.fileUtils.getString("action.mom.double"));
         final int solvedProblems = this.random.nextInt(problems);
         final int coffeesWon = solvedProblems * 2;
         final int damage = problems - solvedProblems;
-        System.out.println("OH, MOMMY! You have fixed " + solvedProblems + " that gives you " + coffeesWon + " coffees!");
+        System.out.println(format(this.fileUtils.getString("action.mom.fixed"), solvedProblems, coffeesWon));
         this.fileUtils.waitSeconds(3);
-        System.out.println("But you lost " + damage + " caffeine cells from your body.");
+        System.out.println(format(this.fileUtils.getString("action.mom.lost"), damage));
         character.drinkCoffee(coffeesWon);
         character.receiveDamage(damage);
         this.fileUtils.waitSeconds(2);
+    }
+
+    private void printMom() {
+        System.out.println(
+                " /////////////\\\\\\\\\n" +
+                "(((((((((((((( \\\\\\\\\n" +
+                "))) ~~      ~~  (((\n" +
+                "((( (*)     (*) )))\n" +
+                ")))     <       (((\n" +
+                "((( '\\______/`  )))\n" +
+                ")))\\___________/(((\n" +
+                "       _) (_\n" +
+                "      / \\_/ \\\n" +
+                "     /(     )\\\n" +
+                "    // )___( \\\\\n" +
+                "    \\\\(     )//\n" +
+                "     (       )\n" +
+                "      |  |  |\n" +
+                "       | | |\n" +
+                "       | | |\n" +
+                "      _|_|_|_");
     }
 
 }

@@ -23,7 +23,7 @@ public class ReadNextMessageAction implements DuringGameAction {
     @Override
     public void executeAction(final Character character) {
         try {
-            final int possibleRange = this.fightActionFactory.getAvailableOptions().size() -1;
+            final int possibleRange = this.fightActionFactory.getAvailableOptions().size();
             final int randomNumber = this.random.nextInt(possibleRange);
             final FightAction fightAction = this.fightActionFactory.findFightAction(randomNumber);
             fightAction.executeAction(character);

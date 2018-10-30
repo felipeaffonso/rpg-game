@@ -15,6 +15,7 @@ import java.util.Random;
 
 import static com.challenge.model.CharacterClassEnum.JAVA_PROGRAMMER;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 
@@ -39,6 +40,7 @@ public class AnswerBossMomActionTest {
 
     @Test
     public void executeActionCorrectedFiveAndLeftFiveBugs() {
+        when(this.fileUtils.getString(any())).thenReturn("");
         when(this.random.nextInt(anyInt()))
                 .thenReturn(9)
                 .thenReturn(5);
@@ -50,6 +52,7 @@ public class AnswerBossMomActionTest {
 
     @Test(expected = CoffeeNirvanaException.class)
     public void executeActionMustThrowCoffeeNirvanaExceptionWhenCaffeineLevelIsHigherThanLimit() {
+        when(this.fileUtils.getString(any())).thenReturn("");
         when(this.random.nextInt(anyInt()))
                 .thenReturn(9)
                 .thenReturn(10);
@@ -60,6 +63,7 @@ public class AnswerBossMomActionTest {
 
     @Test(expected = DeadCharacterException.class)
     public void executeActionMustThrowDeadCharacterExceptionWhenCaffeineLevelIsLowerThanLimit() {
+        when(this.fileUtils.getString(any())).thenReturn("");
         when(this.random.nextInt(anyInt()))
                 .thenReturn(25)
                 .thenReturn(1);

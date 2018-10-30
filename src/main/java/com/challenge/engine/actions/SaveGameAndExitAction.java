@@ -16,8 +16,7 @@ public class SaveGameAndExitAction implements DuringGameAction {
     public void executeAction(Character character) {
         try {
             final String uuid = fileUtils.saveCharacterToFile(character);
-            throw new EndGameException("WoW! Your progress is awesome!!! " +
-                    "Here is your password to restore it next time:" + uuid);
+            throw new EndGameException(this.fileUtils.getString("game.showPassword") + uuid);
         } catch(final EndGameException egx) {
             throw egx;
         } catch(final Exception e) {

@@ -10,7 +10,7 @@ public enum CharacterClassEnum implements Serializable {
 
     JAVA_PROGRAMMER(1, "Java Programmer", "Java", 3, "Java Programmer needs more line codes to drink a lot of coffee!"),
     PYTHON_PROGRAMMER(2, "Python Geek", "Python", 4, "Python Programmer is a geek that can code really fast!"),
-    JAVASCRIPT_PROGRAMMER(3, "JS.programmer.min.bundle", "Javascript", 5, "While you read this, 7 new JS frameworks were launched");
+    JAVASCRIPT_PROGRAMMER(3, "programmer.js", "Javascript", 5, "While you read this, 7 new JS frameworks were launched");
 
     private Integer id;
 
@@ -64,14 +64,8 @@ public enum CharacterClassEnum implements Serializable {
                 .collect(Collectors.toList());
     }
 
-
     @Override
     public String toString() {
-        return "CharacterClassEnum{" +
-                "name='" + name + '\'' +
-                ", language='" + language + '\'' +
-                ", languageDamage=" + languageDamage +
-                ", description='" + description + '\'' +
-                '}';
+        return name + " - Language Damage: " + languageDamage + " - Description: " + description;
     }
 }

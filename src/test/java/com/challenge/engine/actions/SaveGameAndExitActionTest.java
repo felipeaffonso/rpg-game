@@ -40,13 +40,11 @@ public class SaveGameAndExitActionTest {
     @Test
     public void executeActionMustReturnEndGameExceptionWithMessageAndPassword() {
         final String uuid = UUID.randomUUID().toString();
-        final String expectedMessage = "WoW! Your progress is awesome!!! " +
-                "Here is your password to restore it next time:" + uuid;
 
         when(this.fileUtils.saveCharacterToFile(this.character)).thenReturn(uuid);
 
         thrown.expect(EndGameException.class);
-        thrown.expectMessage(expectedMessage);
+        thrown.expectMessage(uuid);
 
         target.executeAction(character);
     }

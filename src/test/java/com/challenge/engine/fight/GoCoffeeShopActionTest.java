@@ -14,6 +14,7 @@ import java.util.Random;
 
 import static com.challenge.model.CharacterClassEnum.PYTHON_PROGRAMMER;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -38,6 +39,7 @@ public class GoCoffeeShopActionTest {
     @Test
     public void executeAction() {
         when(this.random.nextInt(5)).thenReturn(3);
+        when(this.fileUtils.getString(anyString())).thenReturn("");
 
         target.executeAction(this.character);
 
@@ -47,6 +49,7 @@ public class GoCoffeeShopActionTest {
     @Test(expected = CoffeeNirvanaException.class)
     public void executeActionMustThrowNirvanaCoffeeExceptionWhenCaffeineLevelIsGreaterThanLimit() {
         when(this.random.nextInt(5)).thenReturn(30);
+        when(this.fileUtils.getString(anyString())).thenReturn("");
 
         target.executeAction(this.character);
 

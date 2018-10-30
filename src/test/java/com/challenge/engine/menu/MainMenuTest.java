@@ -1,6 +1,7 @@
 package com.challenge.engine.menu;
 
 import com.challenge.engine.GameEngine;
+import com.challenge.engine.utils.FileUtils;
 import com.challenge.engine.utils.InputUtils;
 import com.challenge.exception.CoffeeNirvanaException;
 import com.challenge.exception.DeadCharacterException;
@@ -17,6 +18,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.api.mockito.PowerMockito;
 
+import java.io.File;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -34,6 +36,9 @@ public class MainMenuTest {
 
     @Mock
     private InputUtils inputUtils;
+
+    @Mock
+    private FileUtils fileUtils;
 
     @Mock
     private NewGameCommand newGameCommand;
